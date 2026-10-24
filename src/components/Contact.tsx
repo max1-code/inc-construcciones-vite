@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { whatsappUrl } from "../lib/site";
+import { site, whatsappUrl } from "../lib/site";
 
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "ok">("idle");
@@ -13,8 +13,7 @@ export default function Contact() {
     const text = encodeURIComponent(
       `Hola, soy ${name}. Tel: ${phone}. Proyecto: ${desc || "consulta general"}`
     );
-    // Envía por WhatsApp hasta tener backend de email
-    window.open(`https://wa.me/34XXXXXXXXX?text=${text}`, "_blank", "noopener,noreferrer");
+    window.open(`https://wa.me/${site.whatsapp}?text=${text}`, "_blank", "noopener,noreferrer");
     setStatus("ok");
     e.currentTarget.reset();
   }
@@ -32,7 +31,7 @@ export default function Contact() {
 
         {status === "ok" ? (
           <p className="mt-10 rounded-xl border border-bronze/30 bg-bronze/10 px-4 py-8 text-sm text-snow">
-            Gracias. Se ha abierto WhatsApp con tu mensaje. Si no, escríbenos desde el botón flotante.
+            Gracias. Se ha abierto WhatsApp con tu mensaje. Si no, usa el botón flotante.
           </p>
         ) : (
           <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-3 text-left">

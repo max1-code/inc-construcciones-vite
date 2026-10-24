@@ -36,7 +36,7 @@ export default function BeforeAfter() {
           className="relative mt-8 aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-card select-none touch-none"
           onPointerDown={(e) => {
             dragging.current = true;
-            (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+            box.current?.setPointerCapture?.(e.pointerId);
             setFromClientX(e.clientX);
           }}
           onPointerMove={(e) => {
@@ -50,28 +50,35 @@ export default function BeforeAfter() {
             dragging.current = false;
           }}
         >
-          <img src={AFTER} alt="Después de la reforma" className="absolute inset-0 h-full w-full object-cover" draggable={false} />
-          <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
-            <img
-              src={BEFORE}
-              alt="Antes de la reforma"
-              className="absolute inset-0 h-full max-w-none object-cover"
-              style={{ width: box.current ? box.current.offsetWidth : "100%", minWidth: "100%" }}
-              draggable={false}
-            />
-          </div>
+          {/* After (full) */}
+          <img
+            src={AFTER}
+            alt="Después de la reforma"
+            className="absolute inset-0 h-full w-full object-cover"
+            draggable={false}
+          />
+          {/* Before (clipped) */}
+          <img
+            src={BEFORE}
+            alt="Antes de la reforma"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+            draggable={false}
+          />
 
-          {/* Divider + handle */}
-          <div className="absolute inset-y-0 z-10 w-0.5 bg-bronze" style={{ left: `${pos}%` }}>
+          <div
+            className="pointer-events-none absolute inset-y-0 z-10 w-0.5 bg-bronze"
+            style={{ left: `${pos}%` }}
+          >
             <div className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-bronze bg-slate-ink shadow-lg">
               <span className="text-xs font-bold text-bronze">⇄</span>
             </div>
           </div>
 
-          <span className="absolute left-3 top-3 rounded bg-black/60 px-2 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-snow">
+          <span className="pointer-events-none absolute left-3 top-3 rounded bg-black/60 px-2 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-snow">
             Antes
           </span>
-          <span className="absolute right-3 top-3 rounded bg-black/60 px-2 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-snow">
+          <span className="pointer-events-none absolute right-3 top-3 rounded bg-black/60 px-2 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-snow">
             Después
           </span>
 
