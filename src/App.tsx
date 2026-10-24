@@ -10,18 +10,23 @@ import WhatsAppFloat from "./components/WhatsAppFloat";
 
 export default function App() {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <BeforeAfter />
-        <ServicesBento />
-        <Method />
-        <Coverage />
-        <Contact />
-      </main>
-      <Footer />
-      <WhatsAppFloat />
-    </>
+    <div className="relative min-h-dvh overflow-x-hidden">
+      {/* Fixed architectural grid layer */}
+      <div className="pointer-events-none fixed inset-0 z-0 bg-grid" aria-hidden />
+
+      <div className="relative z-10">
+        <Header />
+        <main>
+          <Hero />
+          <BeforeAfter />
+          <ServicesBento />
+          <Method />
+          <Coverage />
+          <Contact />
+        </main>
+        <Footer />
+        <WhatsAppFloat />
+      </div>
+    </div>
   );
 }
